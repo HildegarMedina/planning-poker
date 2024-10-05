@@ -1,8 +1,8 @@
 import createRouter from 'express-promise-router';
-import { getHome } from '../controllers/web.js';
+import { getRoom } from '../../controllers/room.js';
 
 const router = createRouter();
 
-router.get('/', getHome);
+router.get('/room/:id', getRoom);
 
 export default router;

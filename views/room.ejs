@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="has-background-white-ter">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Planning Poker</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="/css/styles.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+    <body>
+
+        <!-- HEADER -->
+        <header class="has-background-primary">
+            <div class="container">
+                <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="/">
+                            <h1 class="is-size-5 has-text-weight-bold">Planning Poker</h1>
+                        </a>
+
+                        <a
+                            role="button"
+                            class="navbar-burger has-text-white"
+                            aria-label="menu"
+                            aria-expanded="false"
+                            data-target="navbarHeader"
+                        >
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+
+                    <div id="navbarHeader" class="navbar-menu">
+                        <div class="navbar-start">
+                            <a class="navbar-item" href="/">Home</a>
+                        </div>
+
+                        <div class="navbar-end">
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="/" class="bd-tw-button button is-primary is-soft">
+                                        <strong>Create Room</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="has-text-dark" x-data="room">
+
+            <div class="container my-5">
+
+                <!-- FORM CREATE ROOM -->
+                <div class="columns px-5">
+                    <div class="card column is-6 is-offset-3 is-mobile">
+                        <div class="card-content">
+                            <div class="content">
+
+                                <div class="notification is-danger is-light" x-show="changeNameForm.responseError">
+                                    <button class="delete" @click="changeNameForm.responseError = false"></button>
+                                    <p x-text="changeNameForm.responseError"></p>
+                                </div>
+
+                                <form action="/room" method="POST"  @submit.prevent="changeName">
+                                    <label class="label">Enter Your Name</label>
+                                    <div class="control">
+                                        <input :class="changeNameForm.error ? 'is-danger input is-medium': 'input is-medium'" type="text" x-model="roomName" placeholder="Enter your name">
+                                        <small x-show="changeNameForm.error" class="has-text-danger">You must enter a name to enter the room</small>
+                                    </div>
+                                    <button :class="changeNameForm.loading ? 'is-loading button is-primary mt-4': 'button is-primary mt-4'">Save</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('room', () => ({
+                    init() {
+                        this.$watch('roomName', value => {
+                            if (value) {
+                                this.changeNameForm.error = false;
+                            }
+                        });
+                    },
+                    roomName: '',
+                    changeNameForm: {
+                        responseError: false,
+                        error: false,
+                        loading: false,
+                    },
+                    async createRoom() {
+                        if (!this.roomName) {
+                            this.changeNameForm.error = true;
+                            return;
+                        }
+                        this.createLoading = true;
+                        try {
+                            const response = await fetch('/room', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ name: this.roomName }),
+                            });
+                            const data = await response.json();
+                            if (response.status != 201) {
+                                this.changeNameForm.responseError = "An error occurred while creating the room";
+                            }else {
+                                window.location.href = `/room/${data.id}`;
+                            }
+                        } catch (error) {
+                            this.changeNameForm.responseError = "An error occurred while creating the room";
+                        } finally {
+                            this.createLoading = false;
+                        }
+                    }
+                }))
+            })
+        </script>
+    </body>
+</html>

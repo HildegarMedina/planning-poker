@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -11,8 +11,14 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.0",
     "express-promise-router": "^4.1.1",
+    "morgan": "^1.10.0",
+    "redis": "^4.7.0",
     "socket.io": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
