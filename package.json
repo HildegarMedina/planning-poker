@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
     "express": "^4.21.0",
+    "express-promise-router": "^4.1.1",
     "socket.io": "^4.8.0"
   }
 }
