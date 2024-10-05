@@ -14,7 +14,7 @@ export const getRoom = async (req, res, next) => {
     const { id } = req.params;
     const room = await getRoomService(id);
     if (room) {
-        res.render('room');
+        res.render('room', { title: 'Room'});
     } else {
         res.redirect('/')
     }

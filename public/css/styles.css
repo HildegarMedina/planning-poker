@@ -3,3 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+.img-avatar {
+    max-width: 50px;
+}
+.player-list > div:nth-child(odd) {
+    border: 1px solid #d1d1d1;
+}

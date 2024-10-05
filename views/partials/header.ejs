@@ -1,0 +1,42 @@
+<header class="has-background-primary">
+    <div class="container">
+        <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">
+                    <h1 class="is-size-5 has-text-weight-bold">Planning Poker</h1>
+                </a>
+
+                <a
+                    role="button"
+                    class="navbar-burger has-text-white"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="navbarHeader"
+                >
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarHeader" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="/">Home</a>
+                </div>
+
+                <% if (title != 'Home') {%>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a href="/" class="bd-tw-button button is-primary is-soft">
+                                    <strong>Create Room</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </nav>
+    </div>
+</header>

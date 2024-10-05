@@ -1,4 +1,5 @@
 import express from 'express';
+import { createServer } from 'node:http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
@@ -7,10 +8,11 @@ import roomWebRoute from './routes/web/room.js'
 import roomApiRoute from './routes/api/room.js'
 import morgan from 'morgan';
 import { redisClient } from './cache/config.js';
+import setupSocket from './socket.js'
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const server = createServer(app);
+const io = setupSocket(server);
 
 // Redis caché
 redisClient.connect();
@@ -19,6 +21,8 @@ redisClient.on('error', (err) => {
 });
 
 // Static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,6 +40,6 @@ app.use(roomWebRoute);
 app.use(roomApiRoute);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

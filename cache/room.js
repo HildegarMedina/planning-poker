@@ -12,7 +12,8 @@ export const saveRoom = async (name) => {
     const randomId = Math.random().toString(36).slice(2);
     const data = {
         name: name,
-        id: randomId
+        id: randomId,
+        players: [],
     }
     await redisClient.set(`room:${randomId}`, JSON.stringify(data));
     return randomId;
@@ -20,4 +21,9 @@ export const saveRoom = async (name) => {
 
 export const removeRoom = async (roomId) => {
     await redisClient.del(`room:${roomId}`);
+}
+
+export const updateRoom = async (roomId, data) => {
+    await redisClient.set(`room:${roomId}`, JSON.stringify(data));
+    return data;
 }
