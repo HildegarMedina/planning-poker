@@ -36,3 +36,27 @@ export const updateCardSelectedService = async (room, player_name, card) => {
     }
     return roomData;
 }
+
+export const calculateResultService = (roomData) => {
+    const cardCounts = {};
+    let total = 0;
+    let count = 0;
+
+    roomData.players.forEach(player => {
+        const card = player.card_selected;
+        if (card != null && card != '?' && card != '☕') {
+            cardCounts[card] = (cardCounts[card] || 0) + 1;
+            let number = (card == "?" || card == "☕") ? 0 : card;
+            number = (number == "1/2") ? 0.5 : number;
+            total += parseFloat(number);
+            count++;
+        }
+    });
+
+    const average = count > 0 ? total / count : 0;
+    roomData["result"] = {
+        "cardCounts": cardCounts,
+        "average": average.toFixed(2)
+    }
+    return roomData;
+}

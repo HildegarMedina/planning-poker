@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import { joinRoom, updateCardSelected } from './controllers/room.js';
+import { joinRoom, updateCardSelected, resetRoom, flipCardsAndCalculateResult } from './controllers/room.js';
 
 const setupSocket = (server) => {
     const io = new Server(server);
@@ -12,6 +12,14 @@ const setupSocket = (server) => {
         socket.on('card selected', (room, player, card) => {
             updateCardSelected(room, player, card, io);
         });
+
+        socket.on('reset room', (room) => {
+            resetRoom(room, io);
+        });
+
+        socket.on('flip cards', (room) => {
+            flipCardsAndCalculateResult(room, io);
+        })
 
         socket.on('disconnect', async () => {
             console.log('user disconnected');

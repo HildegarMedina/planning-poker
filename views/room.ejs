@@ -4,43 +4,69 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Planning Poker</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
-        <link rel="stylesheet" href="/css/styles.css" />
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+        <%- include ('partials/head') %>
     </head>
     <body>
         <%- include ('partials/header') %>
 
         <main class="has-text-dark" x-data="room">
-            
             <div class="container my-5">
+                <h3 class="is-size-4 has-text-weight-medium mx-5 mb-5" x-text="room.name"></h3>
 
                 <div x-show="joined">
                     <div class="is-flex px-5 my-3 is-relative">
-                        <input class="input is-rounded" type="text" value="<%- roomCode %>" readonly />
-                        <button class="button is-primary is-rounded is-absolute right-0 has-text-white" @click="copyUrl">Copy</button>
+                        <input
+                            class="input is-rounded"
+                            type="text"
+                            value="<%- roomCode %>"
+                            readonly
+                        />
+                        <button
+                            class="button is-primary is-rounded is-absolute right-0 has-text-white"
+                            @click="copyUrl"
+                        >
+                            Copy
+                        </button>
                     </div>
 
                     <div>
-                        <button class="button is-primary is-rounded mt-0 ml-5 mb-3 has-text-white" x-show="me.admin">
+                        <button
+                            class="button is-primary is-rounded mt-0 ml-5 mb-3 has-text-white"
+                            x-show="me.admin"
+                            @click="flipCard"
+                        >
                             <span>Flip Cards</span>
-                            <img src="/icons/flip.svg" alt="Flip" class="ml-2 icon-sm">
+                            <img src="/icons/flip.svg" alt="Flip" class="ml-2 icon-sm" />
                         </button>
-                        <button class="button is-danger is-rounded mt-0 ml-5 mb-3 has-text-white" x-show="me.admin">
+                        <button
+                            class="button is-danger is-rounded mt-0 ml-3 mb-3 has-text-white"
+                            x-show="me.admin"
+                            @click="resetRoom"
+                        >
                             <span>Reset</span>
-                            <img src="/icons/reset.svg" alt="Flip" class="ml-2 icon-xs">
+                            <img src="/icons/reset.svg" alt="Flip" class="ml-2 icon-xs" />
                         </button>
                     </div>
                 </div>
 
                 <div class="columns px-5">
-                    <div class="column is-8 is-mobile" x-show="joined">
+                    <div class="column is-8 is-mobile" x-show="joined && room.result">
+                        <div class="chart-container mx-auto">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="has-text-centered">
+                            <p class="is-size-3 has-text-weight-medium mb-0 mt-2">Average: <span class="has-text-danger" x-text="room.result?.average"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="column is-8 is-mobile" x-show="joined && !room.result">
                         <div class="columns is-flex-wrap-wrap">
                             <template x-for="(card, index) in cards" :key="card + index">
                                 <div class="column is-2 is-mobile">
-                                    <button :class="cardSelected == card ? 'card card-poker is-relative is-clickable card-selected' : 'card card-poker is-relative is-clickable'" @click="selectCard(card)">
+                                    <button
+                                        :class="cardSelected == card ? 'card card-poker is-relative is-clickable card-selected' : 'card card-poker is-relative is-clickable'"
+                                        @click="selectCard(card)"
+                                    >
                                         <div class="card-content">
                                             <span x-text="card"></span>
                                         </div>
@@ -52,9 +78,11 @@
                     <div class="column is-4 is-mobile" x-show="joined">
                         <article class="panel is-danger player-list">
                             <p class="panel-heading has-text-white">Players</p>
-                            <template x-for="(player, index) in players" :key="player + index">
-                                <div class="is-flex is-align-items-center px-4 pt-4 pb-2 mb-0">
-                                    <div class="is-flex is-align-items-center">
+                            <template x-for="(player, index) in room.players" :key="player + index">
+                                <div class="is-flex is-align-items-center is-justify-content-space-between px-4 pt-4 pb-2 mb-0">
+                                    <div
+                                        class="is-flex is-align-items-center is-justify-content-space-between"
+                                    >
                                         <div class="mr-3">
                                             <img
                                                 :src="`/icons/avatar-${player.avatar_index}.svg`"
@@ -63,10 +91,29 @@
                                             />
                                         </div>
                                         <div>
-                                            <h3 class="mb-0 panel-block p-0 has-text-weight-medium" x-text="player.name"></h3>
+                                            <h3
+                                                class="mb-0 panel-block p-0 has-text-weight-medium"
+                                                x-text="player.name"
+                                            ></h3>
                                         </div>
                                     </div>
-                                    <div class="ml-3 pt-1"><img x-bind:class="player.card_selected ? 'icon-sm' : 'is-hidden icon-sm'" src="/icons/checked.svg"></div>
+                                    <div class="ml-3 pt-1">
+                                        <div
+                                            x-bind:class="player.card_selected && player.card_selected !== true ? 'card card-selected card-poker is-relative is-clickable miniature': 'card card-poker is-relative is-clickable miniature'"
+                                            x-show="player.card_selected"
+                                        >
+                                            <img
+                                                src="/icons/eye-slash.svg"
+                                                class="icon-sm"
+                                                x-show="player.card_selected === true"
+                                            />
+                                            <span
+                                                x-show="player.card_selected && player.card_selected !== true"
+                                                class="is-size-5"
+                                                x-text="player.card_selected"
+                                            ></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </template>
                         </article>
@@ -113,6 +160,7 @@
         </main>
 
         <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="/js/room.js"></script>
     </body>
 </html>

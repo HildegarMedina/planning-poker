@@ -1,5 +1,5 @@
-import { createRoomService, getRoomService } from '../services/room.js';
-import { addPlayerToRoomService, removePlayerFromRoomService, updateCardSelectedService } from '../services/player.js';
+import { createRoomService, getRoomService, updateRoomService } from '../services/room.js';
+import { addPlayerToRoomService, removePlayerFromRoomService, updateCardSelectedService, calculateResultService } from '../services/player.js';
 
 export const createRoom = async (req, res, next) => {
     const { name } = req.body;
@@ -50,4 +50,23 @@ export const updateCardSelected = async (room, player, card, io) => {
     const roomData = await updateCardSelectedService(room, player, card);
     io.to(room).emit('room updated', roomData)
     console.log(player + ' Card selected: ' + card);
+}
+
+export const resetRoom = async (room, io) => {
+    const roomData = await getRoomService(room);
+    if (roomData) {
+        roomData.players.forEach(p => p.card_selected = null);
+        await updateRoomService(room, roomData);
+        io.to(room).emit('room updated', roomData);
+        console.log('Room reset');
+    }
+}
+
+export const flipCardsAndCalculateResult = async (room, io) => {
+    const roomData = await getRoomService(room);
+    if (roomData) {
+        const roomDataUpdated = calculateResultService(roomData);
+        io.to(room).emit('cards flipped', roomDataUpdated);
+        console.log('Cards flipped and results calculated');
+    }
 }

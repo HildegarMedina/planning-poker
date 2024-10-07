@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+body, html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 100%;
+}
 .img-avatar {
     max-width: 50px;
 }
@@ -30,6 +34,7 @@
     top: 5px;
     border: 1px solid #d1d1d1;
     border-radius: 10px;
+    border-radius: 7px;
 }
 .is-fullwidth {
     width: 100%;
@@ -50,9 +55,22 @@
 .card-poker.card-selected:before {
     border-color: #fff;
 }
+.card-poker.miniature {
+    width: 40px;
+    height: 50px;
+}
+.card-poker.miniature:before {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    left: 2px;
+    top: 2px;
+}
 .icon-xs {
     width: 15px;
 }
 .icon-sm {
     width: 20px;
+}
+.chart-container {
+    max-width: 500px;
 }

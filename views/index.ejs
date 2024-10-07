@@ -4,9 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Planning Poker - <%- title %></title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
-        <link rel="stylesheet" href="/css/styles.css" />
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <%- include ('partials/head') %>
     </head>
     <body>
 
@@ -35,7 +33,7 @@
                                         <input :class="createForm.error ? 'is-danger input is-medium': 'input is-medium'" type="text" x-model="roomName" placeholder="Enter the room name">
                                         <small x-show="createForm.error" class="has-text-danger">You must enter a room name to create a room</small>
                                     </div>
-                                    <button :class="createForm.loading ? 'is-loading button is-danger mt-4': 'button is-danger mt-4'">Create Room</button>
+                                    <button :class="createForm.loading ? 'is-loading button is-danger mt-4 has-text-white': 'button is-danger mt-4 has-text-white'">Create Room</button>
                                 </form>
 
                             </div>
