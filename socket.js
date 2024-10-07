@@ -1,38 +1,16 @@
 import { Server } from 'socket.io';
-import { getRoomService, removePlayerFromRoomService, addPlayerToRoomService } from './services/room.js';
+import { joinRoom, updateCardSelected } from './controllers/room.js';
 
 const setupSocket = (server) => {
     const io = new Server(server);
 
     io.on('connection', async (socket) => {
-        console.log('a user connected');
+        console.log('User connected');
 
-        socket.on('join room', async (name, room) => {
+        socket.on('join room', (name, room) => joinRoom(name, room, socket, io));
 
-            const roomData = await getRoomService(room)
-            if (roomData) {
-                // Join player to room and 
-                socket.join(room);
-                console.log(name + ` joined room: ${room}`);
-
-                // Add player to room
-                const newRoomData = await addPlayerToRoomService(room, roomData, name);
-                if (newRoomData) {
-                    console.log(name + ' added to room');
-                    io.to(room).emit('room updated', newRoomData);
-                }
-
-                socket.on('disconnect', async () => {
-                    const updatedRoomData = await getRoomService(room); 
-
-                    console.log(name + ' disconnected of room');
-                    const newRoomData = await removePlayerFromRoomService(room, updatedRoomData, name);
-                    console.log('Exit player: ', name);
-                    console.log('Room data: ', newRoomData);
-                    io.to(room).emit('room updated', newRoomData);
-                });
-            }
-
+        socket.on('card selected', (room, player, card) => {
+            updateCardSelected(room, player, card, io);
         });
 
         socket.on('disconnect', async () => {

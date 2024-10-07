@@ -8,19 +8,25 @@ document.addEventListener("alpine:init", () => {
             this.socket = socket;
 
             socket.on("room updated", (room) => {
-                this.players = room.players;
+                if (!this.initialized) {
+                    const me = room.players.find(p => p.name === this.playerName);
+                    this.cardSelected = me.card_selected ? me.card_selected : null;
+                    this.me = me;
+                    this.initialized = true;
+                }
+                this.players = room.players.map((v, i) => ({...v, card_selected: v.card_selected ? true : false }))
             });
 
-            this.avatarIndex = Array.from({ length: 14 }, (_, i) => i + 1);
-            this.avatarIndex = this.avatarIndex.sort(() => Math.random() - 0.5);
-
         },
-        avatarIndex: [],
+        initialized: false,
+        me: {},
         roomId: null,
         socket: null,
         playerName: null,
         players: [],
         joined: false,
+        cards: ['1/2', '1', '3', '5', '8', '13', '21', '34', '55', '80', '?', '☕'],
+        cardSelected: null,
         changeNameForm: {
             responseError: false,
             error: false,
@@ -36,5 +42,24 @@ document.addEventListener("alpine:init", () => {
             this.loading = false;
             this.joined = true;
         },
+        copyUrl() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url);
+            window.Swal.fire({
+                title: 'URL copied!',
+                text: "",
+                icon: 'success',
+                confirmButtonText: 'Accept'
+            });
+        },
+        selectCard(card) {
+            if (this.cardSelected === card) {
+                this.cardSelected = null;
+                this.socket.emit("card selected", this.roomId, this.playerName);
+                return;
+            }
+            this.cardSelected = card;
+            this.socket.emit("card selected", this.roomId, this.playerName, card);
+        }
     }));
 });

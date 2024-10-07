@@ -35,7 +35,7 @@
                                         <input :class="createForm.error ? 'is-danger input is-medium': 'input is-medium'" type="text" x-model="roomName" placeholder="Enter the room name">
                                         <small x-show="createForm.error" class="has-text-danger">You must enter a room name to create a room</small>
                                     </div>
-                                    <button :class="createForm.loading ? 'is-loading button is-primary mt-4': 'button is-primary mt-4'">Create Room</button>
+                                    <button :class="createForm.loading ? 'is-loading button is-danger mt-4': 'button is-danger mt-4'">Create Room</button>
                                 </form>
 
                             </div>

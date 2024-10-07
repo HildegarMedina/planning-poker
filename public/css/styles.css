@@ -9,3 +9,50 @@
 .player-list > div:nth-child(odd) {
     border: 1px solid #d1d1d1;
 }
+.card-poker {
+    height: 150px;
+    background-color: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+.card-poker:before {
+    content: '';
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    left: 5px;
+    top: 5px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+}
+.is-fullwidth {
+    width: 100%;
+}
+.is-relative {
+    position: relative;
+}
+.is-absolute {
+    position: absolute;
+}
+.right-0 {
+    right: 0;
+}
+.card-poker.card-selected {
+    background-color: #ff6685;
+    color: #fff;
+}
+.card-poker.card-selected:before {
+    border-color: #fff;
+}
+.icon-xs {
+    width: 15px;
+}
+.icon-sm {
+    width: 20px;
+}

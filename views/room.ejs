@@ -7,33 +7,72 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
         <link rel="stylesheet" href="/css/styles.css" />
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     </head>
     <body>
-
         <%- include ('partials/header') %>
 
         <main class="has-text-dark" x-data="room">
+            
             <div class="container my-5">
-                <!-- FORM CREATE ROOM -->
+
+                <div x-show="joined">
+                    <div class="is-flex px-5 my-3 is-relative">
+                        <input class="input is-rounded" type="text" value="<%- roomCode %>" readonly />
+                        <button class="button is-primary is-rounded is-absolute right-0 has-text-white" @click="copyUrl">Copy</button>
+                    </div>
+
+                    <div>
+                        <button class="button is-primary is-rounded mt-0 ml-5 mb-3 has-text-white" x-show="me.admin">
+                            <span>Flip Cards</span>
+                            <img src="/icons/flip.svg" alt="Flip" class="ml-2 icon-sm">
+                        </button>
+                        <button class="button is-danger is-rounded mt-0 ml-5 mb-3 has-text-white" x-show="me.admin">
+                            <span>Reset</span>
+                            <img src="/icons/reset.svg" alt="Flip" class="ml-2 icon-xs">
+                        </button>
+                    </div>
+                </div>
+
                 <div class="columns px-5">
-                    <div class="column is-8 is-mobile" x-show="joined">cards</div>
+                    <div class="column is-8 is-mobile" x-show="joined">
+                        <div class="columns is-flex-wrap-wrap">
+                            <template x-for="(card, index) in cards" :key="card + index">
+                                <div class="column is-2 is-mobile">
+                                    <button :class="cardSelected == card ? 'card card-poker is-relative is-clickable card-selected' : 'card card-poker is-relative is-clickable'" @click="selectCard(card)">
+                                        <div class="card-content">
+                                            <span x-text="card"></span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
                     <div class="column is-4 is-mobile" x-show="joined">
-                        <article class="panel is-primary player-list">
-                            <p class="panel-heading">Players</p>
+                        <article class="panel is-danger player-list">
+                            <p class="panel-heading has-text-white">Players</p>
                             <template x-for="(player, index) in players" :key="player + index">
                                 <div class="is-flex is-align-items-center px-4 pt-4 pb-2 mb-0">
-                                    <div class="mr-3">
-                                        <img :src="`/icons/avatar-${avatarIndex[index+1]}.svg`" alt="Avatar" class="is-full img-avatar">
+                                    <div class="is-flex is-align-items-center">
+                                        <div class="mr-3">
+                                            <img
+                                                :src="`/icons/avatar-${player.avatar_index}.svg`"
+                                                alt="Avatar"
+                                                class="is-full img-avatar"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 class="mb-0 panel-block p-0 has-text-weight-medium" x-text="player.name"></h3>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <a class="panel-block p-0 has-text-weight-medium" x-text="player"></a>
-                                    </div>
+                                    <div class="ml-3 pt-1"><img x-bind:class="player.card_selected ? 'icon-sm' : 'is-hidden icon-sm'" src="/icons/checked.svg"></div>
                                 </div>
                             </template>
                         </article>
                     </div>
 
-                    <div class="card column is-6 is-offset-3 is-mobile" x-show="!joined">
+                    <div class="card column is-6 is-offset-3 is-mobile mt-4" x-show="!joined">
                         <div class="card-content">
                             <div class="content">
                                 <div
@@ -61,7 +100,7 @@
                                         >
                                     </div>
                                     <button
-                                        :class="changeNameForm.loading ? 'is-loading button is-primary mt-4': 'button is-primary mt-4'"
+                                        :class="changeNameForm.loading ? 'is-loading button is-danger mt-4 has-text-white': 'button is-danger mt-4 has-text-white'"
                                     >
                                         Save
                                     </button>

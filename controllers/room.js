@@ -1,4 +1,5 @@
 import { createRoomService, getRoomService } from '../services/room.js';
+import { addPlayerToRoomService, removePlayerFromRoomService, updateCardSelectedService } from '../services/player.js';
 
 export const createRoom = async (req, res, next) => {
     const { name } = req.body;
@@ -14,8 +15,39 @@ export const getRoom = async (req, res, next) => {
     const { id } = req.params;
     const room = await getRoomService(id);
     if (room) {
-        res.render('room', { title: 'Room'});
+        const roomCode = req.protocol + '://' + req.get('host') + req.originalUrl;
+        res.render('room', { title: 'Room', roomCode: roomCode});
     } else {
         res.redirect('/')
     }
+}
+
+export const joinRoom = async (name, room, socket, io) => {
+    const roomData = await getRoomService(room)
+    if (roomData) {
+
+        socket.join(room); // Join player to room and 
+        console.log(name + ` joined room: ${room}`);
+
+        // Add player to room
+        const newRoomData = await addPlayerToRoomService(room, roomData, name);
+        if (newRoomData) {
+            console.log(name + ' added to room');
+            io.to(room).emit('room updated', newRoomData);
+        }
+
+        socket.on('disconnect', async () => {
+            const updatedRoomData = await getRoomService(room); 
+            const newRoomData = await removePlayerFromRoomService(room, updatedRoomData, name);
+            io.to(room).emit('room updated', newRoomData);
+            console.log(name + ' disconnected of room');
+        });
+    }
+
+}
+
+export const updateCardSelected = async (room, player, card, io) => {
+    const roomData = await updateCardSelectedService(room, player, card);
+    io.to(room).emit('room updated', roomData)
+    console.log(player + ' Card selected: ' + card);
 }
