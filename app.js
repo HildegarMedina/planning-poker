@@ -1,17 +1,16 @@
-import express from 'express';
-import { createServer } from 'node:http';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
+import express from 'express';
+import morgan from 'morgan';
+import path from 'path';
+import { createServer } from 'node:http';
+import { fileURLToPath } from 'url';
+
+import { redisClient } from './cache/config.js';
 import homeWebRoute from './src/routes/web/index.js'
 import roomWebRoute from './src/routes/web/room.js'
 import roomApiRoute from './src/routes/api/room.js'
-import morgan from 'morgan';
-import { redisClient } from './cache/config.js';
 import setupSocket from './src/sockets/index.js'
-import dotenv from 'dotenv';
 
-dotenv.config();
 const app = express();
 const server = createServer(app);
 const io = setupSocket(server);

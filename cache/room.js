@@ -1,6 +1,8 @@
 import { redisClient } from './config.js';
 import crypto from 'crypto';
 
+const expirationTime = parseInt(process.env.ROOM_EXPIRATION_TIME);
+
 export const getRoom = async (id) => {
     const room = await redisClient.get(`room:${id}`);
     if (room) {
@@ -16,7 +18,7 @@ export const saveRoom = async (name) => {
         id: randomId,
         players: [],
     }
-    await redisClient.set(`room:${randomId}`, JSON.stringify(data), { EX: process.env.ROOM_EXPIRATION_TIME });
+    await redisClient.set(`room:${randomId}`, JSON.stringify(data), { EX: expirationTime });
     return randomId;
 }
 
@@ -25,6 +27,6 @@ export const removeRoom = async (roomId) => {
 }
 
 export const updateRoom = async (roomId, data) => {
-    await redisClient.set(`room:${roomId}`, JSON.stringify(data), { EX: process.env.ROOM_EXPIRATION_TIME });
+    await redisClient.set(`room:${roomId}`, JSON.stringify(data), { EX: expirationTime });
     return data;
 }
