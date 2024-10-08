@@ -3,12 +3,12 @@ import { createServer } from 'node:http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
-import homeWebRoute from './routes/web/index.js'
-import roomWebRoute from './routes/web/room.js'
-import roomApiRoute from './routes/api/room.js'
+import homeWebRoute from './src/routes/web/index.js'
+import roomWebRoute from './src/routes/web/room.js'
+import roomApiRoute from './src/routes/api/room.js'
 import morgan from 'morgan';
 import { redisClient } from './cache/config.js';
-import setupSocket from './socket.js'
+import setupSocket from './src/sockets/index.js'
 
 const app = express();
 const server = createServer(app);
@@ -24,7 +24,7 @@ redisClient.on('error', (err) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'src/views'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware

@@ -1,4 +1,4 @@
-import { getRoom, updateRoom } from "../cache/room.js";
+import { getRoom, updateRoom } from "../../cache/room.js";
 
 export const addPlayerToRoomService = async (id, old_data, new_player) => {
     const playerExists = old_data.players.find(p => p.name === new_player);
@@ -37,7 +37,7 @@ export const updateCardSelectedService = async (room, player_name, card) => {
     return roomData;
 }
 
-export const calculateResultService = (roomData) => {
+export const flipCardsService = async (roomData) => {
     const cardCounts = {};
     let total = 0;
     let count = 0;
@@ -58,5 +58,6 @@ export const calculateResultService = (roomData) => {
         "cardCounts": cardCounts,
         "average": average.toFixed(2)
     }
+    await updateRoom(roomData.id, roomData);
     return roomData;
 }

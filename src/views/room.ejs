@@ -33,6 +33,7 @@
                         <button
                             class="button is-primary is-rounded mt-0 ml-5 mb-3 has-text-white"
                             x-show="me.admin"
+                            x-bind:disabled="room.result?.average !== undefined"
                             @click="flipCard"
                         >
                             <span>Flip Cards</span>
