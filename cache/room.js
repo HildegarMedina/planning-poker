@@ -16,7 +16,7 @@ export const saveRoom = async (name) => {
         id: randomId,
         players: [],
     }
-    await redisClient.set(`room:${randomId}`, JSON.stringify(data), 'EX', 86400);
+    await redisClient.set(`room:${randomId}`, JSON.stringify(data), { EX: process.env.ROOM_EXPIRATION_TIME });
     return randomId;
 }
 
@@ -25,6 +25,6 @@ export const removeRoom = async (roomId) => {
 }
 
 export const updateRoom = async (roomId, data) => {
-    await redisClient.set(`room:${roomId}`, JSON.stringify(data), 'EX', 86400);
+    await redisClient.set(`room:${roomId}`, JSON.stringify(data), { EX: process.env.ROOM_EXPIRATION_TIME });
     return data;
 }

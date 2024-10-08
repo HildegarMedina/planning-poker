@@ -9,7 +9,9 @@ import roomApiRoute from './src/routes/api/room.js'
 import morgan from 'morgan';
 import { redisClient } from './cache/config.js';
 import setupSocket from './src/sockets/index.js'
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 const server = createServer(app);
 const io = setupSocket(server);

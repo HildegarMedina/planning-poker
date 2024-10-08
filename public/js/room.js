@@ -27,6 +27,21 @@ document.addEventListener("alpine:init", () => {
                 this.createGraph(room);
             });
 
+            socket.on("room:expires", (data) => {
+                console.log('room:expires FRONTEND')
+                window.Swal.fire({
+                    title: 'Room expired',
+                    text: data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Accept',
+                
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/";
+                    }
+                });
+            });
+
         },
         me: {},
         roomId: null,
