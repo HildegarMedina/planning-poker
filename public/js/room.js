@@ -51,12 +51,13 @@ document.addEventListener("alpine:init", () => {
         joined: false,
         cards: ['1/2', '1', '2', '3', '5', '8', '13', '21', '34', '55', '?', '☕'],
         cardSelected: null,
-        graphCreated: false,
+        graphResult: null,
         changeNameForm: {
             responseError: false,
             error: false,
             loading: false,
         },
+        colors: ["rgb(52, 152, 219)", "rgb(46, 204, 113)", "rgb(22, 160, 133)", "rgb(243, 156, 18)", "rgb(231, 76, 60)", "rgb(189, 195, 199)", "rgb(52, 73, 94)", "rgb(149, 165, 166)"],
         joinRoom() {
             if (!this.playerName) {
                 this.changeNameForm.error = true;
@@ -70,7 +71,6 @@ document.addEventListener("alpine:init", () => {
         resetRoom() {
             this.room.result = null;
             this.socket.emit("room:reset", this.roomId);
-            this.graphCreated = false;
         },
         copyUrl() {
             const url = window.location.href;
@@ -94,35 +94,17 @@ document.addEventListener("alpine:init", () => {
         flipCard() {
             this.socket.emit("room:flip-cards", this.roomId);
         },
-        generateVividColor() {
-            const getRandomValue = () => Math.floor(Math.random() * 156) + 100;
-        
-            let r = getRandomValue();
-            let g = getRandomValue();
-            let b = getRandomValue();
-        
-            const isMutedColor = (r, g, b) => {
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                return (max - min) < 50;
-            };
-        
-            while (isMutedColor(r, g, b)) {
-                r = getRandomValue();
-                g = getRandomValue();
-                b = getRandomValue();
+        getBackgroundColors(length) {
+            const backgroundColors = [];
+            for (let i = 0; i < length; i++) {
+                backgroundColors.push(this.colors[i]);
             }
-
-            return `rgb(${r}, ${g}, ${b})`;
+            return backgroundColors;
         },
-        createGraph(room) {
-            if (this.graphCreated) {
-                return;
-            }
+        generateConfigGraph(room) {
             const result = room.result;
-            const backgroundColors = Object.keys(result.cardCounts).map((card) => {
-                return this.generateVividColor();
-            });
+            console.log('result.cardCounts', result.cardCounts)
+            const backgroundColors = this.getBackgroundColors(Object.keys(result.cardCounts).length);
             const data = Object.keys(result.cardCounts).map((card) => {
                 return result.cardCounts[card];
             });
@@ -130,34 +112,55 @@ document.addEventListener("alpine:init", () => {
                 const percentage = ((result.cardCounts[card] / 20) * 100).toFixed(2);
                 return `${card} (${result.cardCounts[card]} votes)  %${percentage}`;
             });
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-                type: "pie",
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            data: data,
-                            backgroundColor: backgroundColors,
-                            hoverOffset: 4,
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 16,
-                                    family: "'Roboto', sans-serif",
-                                }
+            return { backgroundColors, data, labels };
+        },
+        destroyGraph() {            
+            if (this.graphResult) {
+                this.graphResult.destroy();
+                this.graphResult = null;
+            }
+        },
+        getDataChart(room) {
+            const { backgroundColors, data, labels } = this.generateConfigGraph(room);
+            return {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        hoverOffset: 4,
+                    },
+                ],
+            }
+        },
+        getOptionsChart() {
+            return {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        fullSize: true,
+                        labels: {
+                            font: {
+                                size: 16,
+                                family: "'Roboto', sans-serif",
                             }
                         }
-                    },
-                }
+                    }
+                },
+            }
+        },
+        createGraph(room) {
+            if (this.graphResult) {
+                this.destroyGraph(room);
+            }
+            const ctx = document.getElementById('myChart');
+            const chart = new Chart(ctx, {
+                type: "pie",
+                data: this.getDataChart(room),
+                options: this.getOptionsChart()
             });
-            this.graphCreated = true;
+            this.graphResult = chart;
         }
     }));
 });
