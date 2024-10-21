@@ -21,7 +21,12 @@ A collaborative tool for agile teams to estimate project tasks using the Plannin
 | **Redis** | Redis is an open source data structure server. |
 | **Chart.js** | Chart.js renders chart elements on an HTML5 canvas. |
 
-## Setup
+## Setup with Docker
+```
+docker-compose up
+```
+
+## Setup without Docker
 
 You need to copy and paste the file named .env.example:
 ```
