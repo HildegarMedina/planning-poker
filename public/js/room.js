@@ -57,7 +57,7 @@ document.addEventListener("alpine:init", () => {
             error: false,
             loading: false,
         },
-        colors: ["rgb(52, 152, 219)", "rgb(46, 204, 113)", "rgb(22, 160, 133)", "rgb(243, 156, 18)", "rgb(231, 76, 60)", "rgb(189, 195, 199)", "rgb(52, 73, 94)", "rgb(149, 165, 166)"],
+        colors: ["#6366F1", "#A78BFA", "#10B981", "#34D399", "#F59E0B", "#F43F5E", "#06B6D4", "#8B5CF6", "#EC4899", "#84CC16", "#3B82F6", "#14B8A6"],
         joinRoom() {
             if (!this.playerName) {
                 this.changeNameForm.error = true;
@@ -136,15 +136,26 @@ document.addEventListener("alpine:init", () => {
         getOptionsChart() {
             return {
                 responsive: true,
+                animation: false,
+                animations: { colors: false, x: false, y: false },
+                transitions: {
+                    active: { animation: { duration: 0 } },
+                    resize: { animation: { duration: 0 } },
+                },
                 plugins: {
                     legend: {
                         display: true,
                         fullSize: true,
                         labels: {
+                            color: '#E2E8F0',
                             font: {
-                                size: 16,
-                                family: "'Roboto', sans-serif",
-                            }
+                                size: 14,
+                                family: "'DM Sans', sans-serif",
+                                weight: '500',
+                            },
+                            padding: 14,
+                            boxWidth: 14,
+                            boxHeight: 14,
                         }
                     }
                 },
