@@ -1,0 +1,28 @@
+# ============================================================
+# Planning Poker — Development overrides
+# ============================================================
+# Auto-loaded by `docker compose up`. Provides:
+#   - "dev" image stage (with nodemon)
+#   - Bind mounts for live-reload of source/views/static assets
+#   - Exposes Redis port to host for local debugging
+# ============================================================
+
+services:
+  app:
+    build:
+      target: dev
+    image: planning-poker:dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./app.js:/usr/src/app/app.js
+      - ./src:/usr/src/app/src
+      - ./public:/usr/src/app/public
+      - ./cache:/usr/src/app/cache
+      - ./package.json:/usr/src/app/package.json
+      # Anonymous volume to keep node_modules from the image (binaries built for Linux)
+      - /usr/src/app/node_modules
+
+  redis:
+    ports:
+      - "6379:6379"
