@@ -17,6 +17,8 @@ export const saveRoom = async (name) => {
         name: name,
         id: randomId,
         players: [],
+        currentStory: null,
+        history: [],
     }
     await redisClient.set(`room:${randomId}`, JSON.stringify(data), { EX: expirationTime });
     return randomId;

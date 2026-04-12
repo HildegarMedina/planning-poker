@@ -29,11 +29,33 @@
                         </button>
                     </div>
 
+                    <div class="px-5 mb-3" x-show="me.admin && !room.currentStory" x-cloak>
+                        <label class="label has-text-white">What are you going to estimate?</label>
+                        <form class="is-flex" @submit.prevent="saveStory">
+                            <input
+                                class="input is-rounded"
+                                type="text"
+                                x-model="storyInput"
+                                placeholder="e.g. Login System"
+                            />
+                            <button class="button is-primary is-rounded ml-2 has-text-white" type="submit">
+                                Start
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="px-5 mb-3" x-show="room.currentStory" x-cloak>
+                        <p class="is-size-5 has-text-white">
+                            <span class="has-text-grey-light">Estimating:</span>
+                            <span class="has-text-weight-bold" x-text="room.currentStory"></span>
+                        </p>
+                    </div>
+
                     <div>
                         <button
                             class="button is-primary is-rounded mt-0 ml-5 mb-3 has-text-white"
                             x-show="me.admin"
-                            x-bind:disabled="room.result?.average !== undefined"
+                            x-bind:disabled="!room.currentStory || room.result?.average !== undefined"
                             @click="flipCard"
                         >
                             <span>Flip Cards</span>
@@ -46,6 +68,13 @@
                         >
                             <span>Reset</span>
                             <img src="/icons/reset.svg" alt="Flip" class="ml-2 icon-xs" />
+                        </button>
+                        <button
+                            class="button is-link is-rounded mt-0 ml-3 mb-3 has-text-white"
+                            x-show="me.admin && room.result?.average !== undefined"
+                            @click="newStory"
+                        >
+                            <span>New Story</span>
                         </button>
                     </div>
                 </div>
@@ -155,6 +184,21 @@
                                 </form>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="px-5 mt-5" x-show="joined && room.history && room.history.length > 0" x-cloak>
+                    <h4 class="is-size-5 has-text-white has-text-weight-medium mb-3">History</h4>
+                    <div class="panel is-danger">
+                        <template x-for="(item, index) in room.history" :key="index">
+                            <div class="is-flex is-align-items-center is-justify-content-space-between px-4 py-3 panel-block has-text-white">
+                                <span x-text="item.name"></span>
+                                <span>
+                                    <span class="has-text-grey-light is-size-7">Average:</span>
+                                    <span class="has-text-danger has-text-weight-bold is-size-5" x-text="item.average"></span>
+                                </span>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>

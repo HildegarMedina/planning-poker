@@ -51,6 +51,7 @@ document.addEventListener("alpine:init", () => {
         joined: false,
         cards: ['1/2', '1', '2', '3', '5', '8', '13', '21', '34', '55', '?', '☕'],
         cardSelected: null,
+        storyInput: '',
         graphResult: null,
         changeNameForm: {
             responseError: false,
@@ -71,6 +72,17 @@ document.addEventListener("alpine:init", () => {
         resetRoom() {
             this.room.result = null;
             this.socket.emit("room:reset", this.roomId);
+        },
+        saveStory() {
+            const story = (this.storyInput || '').trim();
+            if (!story) return;
+            this.socket.emit("room:set-story", this.roomId, story);
+            this.storyInput = '';
+        },
+        newStory() {
+            this.destroyGraph();
+            this.cardSelected = null;
+            this.socket.emit("room:new-story", this.roomId);
         },
         copyUrl() {
             const url = window.location.href;

@@ -3,6 +3,8 @@ import {
     getRoomService,
     joinRoomService,
     resetRoomService,
+    setStoryService,
+    newStoryService,
 } from "../services/room.js";
 import { flipCardsService } from "../services/player.js";
 
@@ -34,6 +36,20 @@ export const joinRoom = async (name, room, socket, io) => {
 export const resetRoom = async (room, io) => {
     const roomData = await resetRoomService(room, io);
     io.to(room).emit("room:updated", roomData);
+};
+
+export const setStory = async (room, story, io) => {
+    const roomData = await setStoryService(room, story, io);
+    if (roomData) {
+        io.to(room).emit("room:updated", roomData);
+    }
+};
+
+export const newStory = async (room, io) => {
+    const roomData = await newStoryService(room, io);
+    if (roomData) {
+        io.to(room).emit("room:updated", roomData);
+    }
 };
 
 export const flipCards = async (room, io) => {
