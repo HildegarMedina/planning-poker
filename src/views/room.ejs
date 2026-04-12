@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" class="has-background-white-ter">
+<html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
             <div class="container my-5">
                 <h3 class="is-size-4 has-text-weight-medium mx-5 mb-5" x-text="room.name"></h3>
 
-                <div x-show="joined">
+                <div x-show="joined" x-cloak>
                     <div class="is-flex px-5 my-3 is-relative">
                         <input
                             class="input is-rounded"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="columns px-5">
-                    <div class="column is-8 is-mobile" x-show="joined && room.result">
+                    <div class="column is-8 is-mobile" x-show="joined && room.result" x-cloak>
                         <div class="chart-container mx-auto">
                             <canvas id="myChart"></canvas>
                         </div>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="column is-8 is-mobile" x-show="joined && !room.result">
+                    <div class="column is-8 is-mobile" x-show="joined && !room.result" x-cloak>
                         <div class="columns is-flex-wrap-wrap">
                             <template x-for="(card, index) in cards" :key="card + index">
                                 <div class="column is-2 is-mobile">
@@ -76,7 +76,7 @@
                             </template>
                         </div>
                     </div>
-                    <div class="column is-4 is-mobile" x-show="joined">
+                    <div class="column is-4 is-mobile" x-show="joined" x-cloak>
                         <article class="panel is-danger player-list">
                             <p class="panel-heading has-text-white">Players</p>
                             <template x-for="(player, index) in room.players" :key="player + index">
@@ -120,7 +120,7 @@
                         </article>
                     </div>
 
-                    <div class="card column is-6 is-offset-3 is-mobile mt-4" x-show="!joined">
+                    <div class="card column is-6 is-offset-3 is-mobile mt-4" x-show="!joined" x-cloak>
                         <div class="card-content">
                             <div class="content">
                                 <div

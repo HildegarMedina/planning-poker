@@ -1,49 +1,188 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" class="has-background-white-ter">
+<html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Planning Poker - <%- title %></title>
+        <meta name="description" content="Planning Poker — a free, simple tool to help agile teams estimate projects collaboratively in real time." />
         <%- include ('partials/head') %>
     </head>
     <body>
 
         <%- include ('partials/header') %>
 
-        <main class="has-text-dark" x-data="createRoom">
+        <main x-data="createRoom">
 
-            <div class="container my-5">
+            <!-- ============ HERO ============ -->
+            <section class="pp-hero">
+                <div class="container">
+                    <div class="pp-hero-grid">
 
-                <!-- FORM CREATE ROOM -->
-                <div class="columns px-5">
-                    <div class="card column is-6 is-offset-3 is-mobile">
-                        <div class="card-content">
-                            <div class="content">
+                        <div class="pp-hero-copy">
+                            <span class="pp-badge">
+                                <span class="pp-badge-dot"></span>
+                                Free · No sign-up · Real-time
+                            </span>
+                            <h1 class="pp-hero-title">
+                                Estimate smarter with
+                                <span class="pp-gradient-text">Planning Poker</span>
+                            </h1>
+                            <p class="pp-hero-sub">
+                                A simple, free tool that helps agile teams run estimation
+                                sessions in real time. Create a room, share the link, and
+                                start voting in seconds — no accounts, no friction.
+                            </p>
 
-                                <div class="notification is-danger is-light" x-show="createForm.responseError">
-                                    <button class="delete" @click="createForm.responseError = false"></button>
-                                    <p x-text="createForm.responseError"></p>
-                                </div>
+                            <ul class="pp-hero-points">
+                                <li><span class="pp-check">✓</span> Instant rooms — share a link to invite your team</li>
+                                <li><span class="pp-check">✓</span> Live voting with hidden cards until everyone is ready</li>
+                                <li><span class="pp-check">✓</span> Automatic averages and a clear results breakdown</li>
+                            </ul>
+                        </div>
 
-                                <h2 class="is-size-4 has-text-centered has-text-weight-medium">Create Room</h2>
+                        <!-- ============ CREATE ROOM CARD ============ -->
+                        <div class="card pp-hero-card">
+                            <div class="card-content">
+                                <div class="content">
 
-                                <form action="/room" method="POST"  @submit.prevent="createRoom">
-                                    <label class="label">Room Name</label>
-                                    <div class="control">
-                                        <input :class="createForm.error ? 'is-danger input is-medium': 'input is-medium'" type="text" x-model="roomName" placeholder="Enter the room name">
-                                        <small x-show="createForm.error" class="has-text-danger">You must enter a room name to create a room</small>
+                                    <div class="notification is-danger is-light" x-show="createForm.responseError" x-cloak>
+                                        <button class="delete" @click="createForm.responseError = false"></button>
+                                        <p x-text="createForm.responseError"></p>
                                     </div>
-                                    <button :class="createForm.loading ? 'is-loading button is-danger mt-4 has-text-white': 'button is-danger mt-4 has-text-white'">Create Room</button>
-                                </form>
 
+                                    <span class="pp-eyebrow">Get started in seconds</span>
+                                    <h2 class="is-size-4 has-text-weight-medium">Create a Room</h2>
+                                    <p class="pp-card-sub">Give your room a name and share it with your team.</p>
+
+                                    <form action="/room" method="POST" @submit.prevent="createRoom">
+                                        <label class="label">Room Name</label>
+                                        <div class="control">
+                                            <input
+                                                :class="createForm.error ? 'is-danger input is-medium': 'input is-medium'"
+                                                type="text"
+                                                x-model="roomName"
+                                                placeholder="e.g. Sprint 42 Planning"
+                                            >
+                                            <small x-show="createForm.error" class="has-text-danger">Please enter a room name to continue</small>
+                                        </div>
+                                        <button :class="createForm.loading ? 'is-loading button is-danger mt-4 has-text-white pp-btn-block-mobile': 'button is-danger mt-4 has-text-white pp-btn-block-mobile'">
+                                            Create Room
+                                        </button>
+                                    </form>
+
+                                </div>
                             </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ FEATURES ============ -->
+            <section class="pp-section">
+                <div class="container">
+                    <div class="pp-section-head">
+                        <span class="pp-eyebrow">Why teams love it</span>
+                        <h2 class="pp-section-title">Built for fast, focused estimations</h2>
+                        <p class="pp-section-sub">Everything you need to run a planning session — nothing you don't.</p>
+                    </div>
+
+                    <div class="pp-features">
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">⚡</div>
+                            <h3>Real-time sync</h3>
+                            <p>Everyone sees votes update live. Powered by sockets, no refreshes needed.</p>
+                        </div>
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">🎯</div>
+                            <h3>Hidden voting</h3>
+                            <p>Cards stay private until the host flips them, so estimates aren't biased.</p>
+                        </div>
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">📊</div>
+                            <h3>Instant results</h3>
+                            <p>Get an automatic average and a clean chart breakdown of every vote.</p>
+                        </div>
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">🔗</div>
+                            <h3>Share with one link</h3>
+                            <p>Copy the room URL and your team is in. No accounts, no setup.</p>
+                        </div>
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">💸</div>
+                            <h3>100% free</h3>
+                            <p>No paywalls, no limits, no trials. Just open it and start estimating.</p>
+                        </div>
+                        <div class="pp-feature">
+                            <div class="pp-feature-icon">🌙</div>
+                            <h3>Easy on the eyes</h3>
+                            <p>A modern dark interface designed for long planning sessions.</p>
                         </div>
                     </div>
                 </div>
+            </section>
 
-            </div>
+            <!-- ============ HOW IT WORKS ============ -->
+            <section class="pp-section">
+                <div class="container">
+                    <div class="pp-section-head">
+                        <span class="pp-eyebrow">How it works</span>
+                        <h2 class="pp-section-title">Three steps to start estimating</h2>
+                    </div>
+
+                    <div class="pp-steps">
+                        <div class="pp-step">
+                            <span class="pp-step-num">01</span>
+                            <h3>Create a room</h3>
+                            <p>Pick a name, hit Create. Your room is ready instantly.</p>
+                        </div>
+                        <div class="pp-step">
+                            <span class="pp-step-num">02</span>
+                            <h3>Invite your team</h3>
+                            <p>Share the room link. Teammates join with a single click.</p>
+                        </div>
+                        <div class="pp-step">
+                            <span class="pp-step-num">03</span>
+                            <h3>Vote and reveal</h3>
+                            <p>Pick your cards, flip them together, and see the result.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ FINAL CTA ============ -->
+            <section class="pp-section pp-cta-section">
+                <div class="container">
+                    <div class="pp-cta-card">
+                        <h2 class="pp-cta-title">Ready to plan your next sprint?</h2>
+                        <p class="pp-cta-sub">It's free, takes seconds, and your team will thank you.</p>
+                        <a href="#" @click.prevent="document.querySelector('.pp-hero-card input').focus(); window.scrollTo({ top: 0, behavior: 'smooth' })" class="button is-danger has-text-white">
+                            Create a Room
+                        </a>
+                    </div>
+                </div>
+            </section>
 
         </main>
+
+        <footer class="pp-footer">
+            <div class="container">
+                <div class="pp-footer-inner">
+                    <p class="pp-footer-credit">
+                        Built with <span class="pp-heart">♥</span> by
+                        <a href="https://devsprinters.site/" target="_blank" rel="noopener noreferrer" class="pp-footer-link">DevSprinters</a>
+                        · Open source on
+                        <a href="https://github.com/HildegarMedina/planning-poker" target="_blank" rel="noopener noreferrer" class="pp-footer-link">
+                            <svg class="pp-gh-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </p>
+                    <p class="pp-footer-sub">Planning Poker · Free agile estimation tool</p>
+                </div>
+            </div>
+        </footer>
 
         <script>
             document.addEventListener('alpine:init', () => {
@@ -66,7 +205,7 @@
                             this.createForm.error = true;
                             return;
                         }
-                        this.createLoading = true;
+                        this.createForm.loading = true;
                         try {
                             const response = await fetch('/api/v1/room', {
                                 method: 'POST',
@@ -78,13 +217,13 @@
                             const data = await response.json();
                             if (response.status != 201) {
                                 this.createForm.responseError = "An error occurred while creating the room";
-                            }else {
+                            } else {
                                 window.location.href = `/room/${data.id}`;
                             }
                         } catch (error) {
                             this.createForm.responseError = "An error occurred while creating the room";
                         } finally {
-                            this.createLoading = false;
+                            this.createForm.loading = false;
                         }
                     }
                 }))

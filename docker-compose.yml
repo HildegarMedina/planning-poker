@@ -5,6 +5,15 @@ services:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      # Live-reload de vistas y estáticos en desarrollo.
+      # Rutas relativas: portables entre máquinas/usuarios.
+      - ./src:/usr/src/app/src
+      - ./public:/usr/src/app/public
+      - ./app.js:/usr/src/app/app.js
+      - ./cache:/usr/src/app/cache
+      # Volumen anónimo para evitar que node_modules del host pise el del contenedor
+      - /usr/src/app/node_modules
     depends_on:
       - redis
     environment:
