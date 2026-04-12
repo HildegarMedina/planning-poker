@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/app.js"
+    "start": "node app.js",
+    "dev": "nodemon --watch app.js --watch src --watch cache --ext js,ejs app.js"
   },
   "keywords": [],
   "author": "",

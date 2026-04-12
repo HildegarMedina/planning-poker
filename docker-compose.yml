@@ -1,28 +1,36 @@
-version: '3.8'
+# ============================================================
+# Planning Poker — Base compose (production-ready defaults)
+# ============================================================
+# Run for production:
+#   docker compose -f docker-compose.yml up -d --build
+#
+# Run for development (auto-loads docker-compose.override.yml):
+#   docker compose up --build
+# ============================================================
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: prod
+    image: planning-poker:latest
+    restart: unless-stopped
     ports:
-      - "3000:3000"
-    volumes:
-      # Live-reload de vistas y estáticos en desarrollo.
-      # Rutas relativas: portables entre máquinas/usuarios.
-      - ./src:/usr/src/app/src
-      - ./public:/usr/src/app/public
-      - ./app.js:/usr/src/app/app.js
-      - ./cache:/usr/src/app/cache
-      # Volumen anónimo para evitar que node_modules del host pise el del contenedor
-      - /usr/src/app/node_modules
-    depends_on:
-      - redis
+      - "${APP_PORT:-3000}:3000"
     environment:
+      NODE_ENV: production
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      ROOM_EXPIRATION_TIME: 3600
+      ROOM_EXPIRATION_TIME: ${ROOM_EXPIRATION_TIME:-3600}
       PORT: 3000
+    depends_on:
+      - redis
 
   redis:
-    image: "redis:alpine"
-    ports:
-      - "6379:6379"
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:

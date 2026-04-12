@@ -10,14 +10,19 @@ document.addEventListener("alpine:init", () => {
             socket.on("room:updated", (room) => {
                 const roomData = room;
                 const me = roomData.players.find(p => p.name === this.playerName);
-                if (me.card_selected != this.cardSelected) {
-                    this.cardSelected = roomData.card_selected;
+                if (me) {
+                    if (me.card_selected != this.cardSelected) {
+                        this.cardSelected = me.card_selected || null;
+                    }
+                    this.me = me;
                 }
-                this.me = me;
                 if (roomData.result) {
                     this.createGraph(roomData);
-                }else {
-                    roomData.players = roomData.players.map((v, i) => ({...v, card_selected: v.card_selected ? true : false }))
+                } else {
+                    roomData.players = roomData.players.map((v) => ({
+                        ...v,
+                        card_selected: v.card_selected ? true : false,
+                    }));
                 }
                 this.room = roomData;
             });
