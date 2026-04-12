@@ -2,14 +2,10 @@
 
 A collaborative tool for agile teams to estimate project tasks using the Planning Poker technique. This application leverages Socket.IO for real-time communication and Redis for efficient caching, ensuring a seamless and responsive user experience.
 
-<img src="https://i.postimg.cc/RFKmH8Xv/Captura-de-pantalla-2026-04-12-185142.png
-" style="width: 100%"/>
-<img src="https://i.postimg.cc/26hYZJ2y/Captura-de-pantalla-2026-04-12-185200.png
-" style="width: 100%"/>
-<img src="https://i.postimg.cc/85MG63tj/Captura-de-pantalla-2026-04-12-185225.png
-" style="width: 100%"/>
-<img src="https://i.postimg.cc/tTWbxf2s/Planning-Poker-04-12-2026-06-52-PM.png
-" style="width: 100%"/>
+<img src="https://i.postimg.cc/RFKmH8Xv/Captura-de-pantalla-2026-04-12-185142.png" style="width: 100%"/>
+<img src="https://i.postimg.cc/26hYZJ2y/Captura-de-pantalla-2026-04-12-185200.png" style="width: 100%"/>
+<img src="https://i.postimg.cc/85MG63tj/Captura-de-pantalla-2026-04-12-185225.png" style="width: 100%"/>
+<img src="https://i.postimg.cc/tTWbxf2s/Planning-Poker-04-12-2026-06-52-PM.png" style="width: 100%"/>
 
 # Technologies Used in the Project
 
