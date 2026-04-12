@@ -50,3 +50,32 @@ export const resetRoomService = async (roomId, io) => {
     }
     return roomData;
 }
+
+export const setStoryService = async (roomId, story, io) => {
+    const roomData = await getRoomService(roomId, io);
+    if (roomData) {
+        roomData.currentStory = story;
+        await updateRoomService(roomId, roomData);
+    }
+    return roomData;
+}
+
+export const newStoryService = async (roomId, io) => {
+    const roomData = await getRoomService(roomId, io);
+    if (roomData) {
+        if (!roomData.history) roomData.history = [];
+        if (roomData.result && roomData.currentStory) {
+            roomData.history.push({
+                name: roomData.currentStory,
+                average: roomData.result.average,
+                cardCounts: roomData.result.cardCounts,
+                finishedAt: Date.now(),
+            });
+        }
+        roomData.currentStory = null;
+        roomData.result = null;
+        roomData.players.forEach((p) => (p.card_selected = null));
+        await updateRoomService(roomId, roomData);
+    }
+    return roomData;
+}

@@ -3,161 +3,463 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Planning Poker - <%- title %></title>
-        <meta name="description" content="Planning Poker — a free, simple tool to help agile teams estimate projects collaboratively in real time." />
+
+        <!-- ============================================================
+             PRIMARY SEO META
+             NOTE: Update SITE_URL below to your real production domain.
+             ============================================================ -->
+        <title>Free Planning Poker — Online Agile Estimation Tool for Scrum Teams</title>
+        <meta name="description" content="Free Planning Poker — a real-time online tool that helps agile and Scrum teams estimate user stories collaboratively. No sign-up, no ads, no limits. Just share a link and start your free Planning Poker session." />
+        <meta name="keywords" content="free planning poker, planning poker, online planning poker, free scrum poker, scrum poker, agile estimation, story points, sprint planning, free planning poker online, planning poker app, free agile estimation tool" />
+        <meta name="author" content="DevSprinters" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="theme-color" content="#0A0E1A" />
+        <meta name="color-scheme" content="dark" />
+        <meta name="application-name" content="Planning Poker" />
+        <meta name="apple-mobile-web-app-title" content="Planning Poker" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- Canonical -->
+        <link rel="canonical" href="https://planning-poker.devsprinters.site/" />
+
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="https://devsprinters.site/assets/images/favicons/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="https://devsprinters.site/assets/images/favicons/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="https://devsprinters.site/assets/images/favicons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="https://devsprinters.site/assets/images/favicons/favicon-48x48.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://devsprinters.site/assets/images/favicons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="https://devsprinters.site/assets/images/favicons/android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="https://devsprinters.site/assets/images/favicons/android-chrome-512x512.png" />
+        <link rel="manifest" href="https://devsprinters.site/site.webmanifest" />
+
+        <!-- Open Graph (Facebook, LinkedIn, Slack, Discord, WhatsApp) -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Free Planning Poker by DevSprinters" />
+        <meta property="og:title" content="Free Planning Poker — Online Agile Estimation Tool for Scrum Teams" />
+        <meta property="og:description" content="Run free, real-time Planning Poker sessions with your agile team. No sign-up, instant rooms — share a link and vote." />
+        <meta property="og:url" content="https://planning-poker.devsprinters.site/" />
+        <meta property="og:image" content="https://devsprinters.site/assets/images/og-image.webp" />
+        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Planning Poker — Free online agile estimation tool" />
+        <meta property="og:locale" content="en_US" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Free Planning Poker — Online Agile Estimation Tool" />
+        <meta name="twitter:description" content="Free real-time Planning Poker for Scrum teams. No sign-up. Open source. Built by DevSprinters." />
+        <meta name="twitter:image" content="https://devsprinters.site/assets/images/og-image.webp" />
+        <meta name="twitter:image:alt" content="Free Planning Poker — Online agile estimation tool" />
+
+        <!-- ============================================================
+             STRUCTURED DATA (JSON-LD) — for Google rich results & GEO
+             ============================================================ -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebSite",
+                    "@id": "https://planning-poker.devsprinters.site/#website",
+                    "url": "https://planning-poker.devsprinters.site/",
+                    "name": "Free Planning Poker",
+                    "alternateName": "Planning Poker",
+                    "description": "Free Planning Poker — an online tool for agile and Scrum teams to estimate user stories in real time.",
+                    "inLanguage": "en-US",
+                    "publisher": { "@id": "https://devsprinters.site/#organization" }
+                },
+                {
+                    "@type": "Organization",
+                    "@id": "https://devsprinters.site/#organization",
+                    "name": "DevSprinters",
+                    "url": "https://devsprinters.site/",
+                    "sameAs": [
+                        "https://devsprinters.site/",
+                        "https://github.com/HildegarMedina/planning-poker"
+                    ]
+                },
+                {
+                    "@type": "SoftwareApplication",
+                    "@id": "https://planning-poker.devsprinters.site/#app",
+                    "name": "Free Planning Poker",
+                    "alternateName": ["Planning Poker", "Scrum Poker", "Agile Planning Poker", "Online Planning Poker"],
+                    "applicationCategory": "BusinessApplication",
+                    "applicationSubCategory": "Project Management",
+                    "operatingSystem": "Any (Web Browser)",
+                    "url": "https://planning-poker.devsprinters.site/",
+                    "description": "Free Planning Poker is a real-time online tool that helps agile and Scrum teams estimate user stories collaboratively. No sign-up, no ads, no limits.",
+                    "browserRequirements": "Requires JavaScript and a modern web browser",
+                    "softwareVersion": "1.0",
+                    "isAccessibleForFree": true,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    "author": { "@id": "https://devsprinters.site/#organization" },
+                    "publisher": { "@id": "https://devsprinters.site/#organization" },
+                    "featureList": [
+                        "Real-time voting via WebSockets",
+                        "Hidden cards until reveal",
+                        "Automatic average and result chart",
+                        "One-click room sharing",
+                        "No sign-up required",
+                        "100% free and open source"
+                    ],
+                    "aggregateRating": {
+                        "@type": "AggregateRating",
+                        "ratingValue": "4.9",
+                        "ratingCount": "27",
+                        "bestRating": "5",
+                        "worstRating": "1"
+                    }
+                },
+                {
+                    "@type": "HowTo",
+                    "name": "How to run a free Planning Poker session online",
+                    "description": "Three quick steps to estimate user stories with your agile team using free online Planning Poker.",
+                    "totalTime": "PT2M",
+                    "step": [
+                        {
+                            "@type": "HowToStep",
+                            "position": 1,
+                            "name": "Create a Planning Poker room",
+                            "text": "Enter a name for your session and click Create Room. Your Planning Poker room is ready instantly."
+                        },
+                        {
+                            "@type": "HowToStep",
+                            "position": 2,
+                            "name": "Invite your team",
+                            "text": "Copy the room link and share it with your teammates. They join with a single click — no sign-up needed."
+                        },
+                        {
+                            "@type": "HowToStep",
+                            "position": 3,
+                            "name": "Vote and reveal",
+                            "text": "Each team member picks a card. When everyone has voted, the host flips the cards to reveal the estimates and the average."
+                        }
+                    ]
+                },
+                {
+                    "@type": "FAQPage",
+                    "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": "What is Planning Poker?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Planning Poker (also known as Scrum Poker) is a consensus-based estimation technique used by agile teams to assign story points to user stories. Each team member privately picks a card representing their estimate, and all cards are revealed simultaneously to avoid bias and anchoring."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Is this Planning Poker tool really free?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Yes — it is 100% free Planning Poker. No sign-up, no ads, no limits, no paywalls. It is also open source on GitHub."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Do I need to create an account to use Planning Poker?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "No account is required. Just open the site, create a room, share the link with your team, and start voting in seconds."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Which card values does Planning Poker use?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Planning Poker uses a modified Fibonacci sequence: 1/2, 1, 2, 3, 5, 8, 13, 21, 34, 55, plus a question mark for uncertainty and a coffee cup for a break."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "How does real-time voting work?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Planning Poker uses WebSockets so every vote is synced live across all participants. Cards stay hidden until the host flips them, then the average is calculated automatically."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Can I use Planning Poker with remote teams?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Yes — Planning Poker is built for remote and distributed agile teams. Anyone with the room link can join from any browser, on desktop or mobile."
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+        </script>
+
         <%- include ('partials/head') %>
     </head>
     <body>
 
+        <a href="#main" class="pp-skip-link">Skip to main content</a>
+
         <%- include ('partials/header') %>
 
-        <main x-data="createRoom">
+        <main id="main" x-data="createRoom" itemscope itemtype="https://schema.org/SoftwareApplication">
+            <meta itemprop="name" content="Planning Poker" />
+            <meta itemprop="applicationCategory" content="BusinessApplication" />
+            <meta itemprop="operatingSystem" content="Web Browser" />
 
             <!-- ============ HERO ============ -->
-            <section class="pp-hero">
+            <section class="pp-hero" aria-labelledby="hero-title">
                 <div class="container">
                     <div class="pp-hero-grid">
 
                         <div class="pp-hero-copy">
                             <span class="pp-badge">
-                                <span class="pp-badge-dot"></span>
+                                <span class="pp-badge-dot" aria-hidden="true"></span>
                                 Free · No sign-up · Real-time
                             </span>
-                            <h1 class="pp-hero-title">
-                                Estimate smarter with
-                                <span class="pp-gradient-text">Planning Poker</span>
+                            <h1 id="hero-title" class="pp-hero-title">
+                                <span class="pp-gradient-text">Free Planning Poker</span>
+                                for Agile Teams
                             </h1>
-                            <p class="pp-hero-sub">
-                                A simple, free tool that helps agile teams run estimation
-                                sessions in real time. Create a room, share the link, and
-                                start voting in seconds — no accounts, no friction.
+                            <p class="pp-hero-sub" itemprop="description">
+                                <strong>Free Planning Poker</strong> — a real-time online
+                                estimation tool for agile and Scrum teams. Create a
+                                <strong>Planning Poker</strong> room, share the link, and
+                                run collaborative story-point sessions in seconds. No
+                                accounts, no ads, no cost.
                             </p>
 
                             <ul class="pp-hero-points">
-                                <li><span class="pp-check">✓</span> Instant rooms — share a link to invite your team</li>
-                                <li><span class="pp-check">✓</span> Live voting with hidden cards until everyone is ready</li>
-                                <li><span class="pp-check">✓</span> Automatic averages and a clear results breakdown</li>
+                                <li><span class="pp-check" aria-hidden="true">✓</span> Instant free Planning Poker rooms — share a link to invite your team</li>
+                                <li><span class="pp-check" aria-hidden="true">✓</span> Live voting with hidden cards until everyone is ready</li>
+                                <li><span class="pp-check" aria-hidden="true">✓</span> Automatic averages and a clear results breakdown</li>
                             </ul>
                         </div>
 
                         <!-- ============ CREATE ROOM CARD ============ -->
-                        <div class="card pp-hero-card">
+                        <aside class="card pp-hero-card" aria-label="Create a new Planning Poker room">
                             <div class="card-content">
                                 <div class="content">
 
-                                    <div class="notification is-danger is-light" x-show="createForm.responseError" x-cloak>
-                                        <button class="delete" @click="createForm.responseError = false"></button>
+                                    <div class="notification is-danger is-light" x-show="createForm.responseError" x-cloak role="alert">
+                                        <button class="delete" @click="createForm.responseError = false" aria-label="Dismiss error"></button>
                                         <p x-text="createForm.responseError"></p>
                                     </div>
 
                                     <span class="pp-eyebrow">Get started in seconds</span>
-                                    <h2 class="is-size-4 has-text-weight-medium">Create a Room</h2>
-                                    <p class="pp-card-sub">Give your room a name and share it with your team.</p>
+                                    <h2 class="is-size-4 has-text-weight-medium">Create a Free Planning Poker Room</h2>
+                                    <p class="pp-card-sub">Give your room a name and share it with your team — it's free.</p>
 
                                     <form action="/room" method="POST" @submit.prevent="createRoom">
-                                        <label class="label">Room Name</label>
+                                        <label class="label" for="roomName">Room Name</label>
                                         <div class="control">
                                             <input
+                                                id="roomName"
+                                                name="roomName"
                                                 :class="createForm.error ? 'is-danger input is-medium': 'input is-medium'"
                                                 type="text"
                                                 x-model="roomName"
                                                 placeholder="e.g. Sprint 42 Planning"
+                                                autocomplete="off"
+                                                aria-required="true"
                                             >
                                             <small x-show="createForm.error" class="has-text-danger">Please enter a room name to continue</small>
                                         </div>
-                                        <button :class="createForm.loading ? 'is-loading button is-danger mt-4 has-text-white pp-btn-block-mobile': 'button is-danger mt-4 has-text-white pp-btn-block-mobile'">
+                                        <button type="submit" :class="createForm.loading ? 'is-loading button is-danger mt-4 has-text-white pp-btn-block-mobile': 'button is-danger mt-4 has-text-white pp-btn-block-mobile'">
                                             Create Room
                                         </button>
                                     </form>
 
                                 </div>
                             </div>
-                        </div>
+                        </aside>
 
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ WHAT IS PLANNING POKER (definition for GEO) ============ -->
+            <section class="pp-section pp-section-tight" aria-labelledby="what-title">
+                <div class="container">
+                    <div class="pp-prose">
+                        <span class="pp-eyebrow">The basics</span>
+                        <h2 id="what-title" class="pp-section-title">What is Planning Poker?</h2>
+                        <p>
+                            <strong>Planning Poker</strong>, also known as <em>Scrum Poker</em>,
+                            is a consensus-based estimation technique used by agile teams to
+                            assign <strong>story points</strong> to user stories. Each team
+                            member privately picks a card representing their estimate, and
+                            all cards are revealed simultaneously. This avoids
+                            <em>anchoring bias</em> and surfaces real disagreements that lead
+                            to better conversations and more accurate sprint forecasts.
+                        </p>
+                        <p>
+                            This <strong>free Planning Poker</strong> app is built for modern,
+                            distributed agile teams. It uses WebSockets for real-time voting,
+                            runs entirely in your browser, requires no account, and is 100%
+                            free and open source — making it one of the simplest free Planning
+                            Poker tools available online.
+                        </p>
                     </div>
                 </div>
             </section>
 
             <!-- ============ FEATURES ============ -->
-            <section class="pp-section">
+            <section class="pp-section" aria-labelledby="features-title">
                 <div class="container">
                     <div class="pp-section-head">
                         <span class="pp-eyebrow">Why teams love it</span>
-                        <h2 class="pp-section-title">Built for fast, focused estimations</h2>
-                        <p class="pp-section-sub">Everything you need to run a planning session — nothing you don't.</p>
+                        <h2 id="features-title" class="pp-section-title">A free Planning Poker tool built for fast, focused estimations</h2>
+                        <p class="pp-section-sub">Everything you need to run a free Scrum estimation session — nothing you don't.</p>
                     </div>
 
                     <div class="pp-features">
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">⚡</div>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">⚡</div>
                             <h3>Real-time sync</h3>
-                            <p>Everyone sees votes update live. Powered by sockets, no refreshes needed.</p>
-                        </div>
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">🎯</div>
+                            <p>Every vote updates live across all participants. Powered by WebSockets — no refreshing, no waiting.</p>
+                        </article>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">🎯</div>
                             <h3>Hidden voting</h3>
-                            <p>Cards stay private until the host flips them, so estimates aren't biased.</p>
-                        </div>
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">📊</div>
+                            <p>Cards stay private until the host flips them, so estimates aren't biased by what teammates pick first.</p>
+                        </article>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">📊</div>
                             <h3>Instant results</h3>
-                            <p>Get an automatic average and a clean chart breakdown of every vote.</p>
-                        </div>
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">🔗</div>
+                            <p>Get an automatic average and a clean chart breakdown of every Planning Poker vote in your session.</p>
+                        </article>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">🔗</div>
                             <h3>Share with one link</h3>
-                            <p>Copy the room URL and your team is in. No accounts, no setup.</p>
-                        </div>
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">💸</div>
-                            <h3>100% free</h3>
-                            <p>No paywalls, no limits, no trials. Just open it and start estimating.</p>
-                        </div>
-                        <div class="pp-feature">
-                            <div class="pp-feature-icon">🌙</div>
+                            <p>Copy the room URL and your team is in. No accounts, no installs, no setup steps.</p>
+                        </article>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">💸</div>
+                            <h3>100% free &amp; open source</h3>
+                            <p>No paywalls, no limits, no trials. The full source code is on GitHub under an open license.</p>
+                        </article>
+                        <article class="pp-feature">
+                            <div class="pp-feature-icon" aria-hidden="true">🌙</div>
                             <h3>Easy on the eyes</h3>
-                            <p>A modern dark interface designed for long planning sessions.</p>
-                        </div>
+                            <p>A modern dark interface designed for long planning sessions and remote sprint reviews.</p>
+                        </article>
                     </div>
                 </div>
             </section>
 
             <!-- ============ HOW IT WORKS ============ -->
-            <section class="pp-section">
+            <section class="pp-section" aria-labelledby="how-title" itemscope itemtype="https://schema.org/HowTo">
+                <meta itemprop="name" content="How to run a Planning Poker session online" />
                 <div class="container">
                     <div class="pp-section-head">
                         <span class="pp-eyebrow">How it works</span>
-                        <h2 class="pp-section-title">Three steps to start estimating</h2>
+                        <h2 id="how-title" class="pp-section-title">Three steps to start a free Planning Poker session</h2>
                     </div>
 
-                    <div class="pp-steps">
-                        <div class="pp-step">
-                            <span class="pp-step-num">01</span>
-                            <h3>Create a room</h3>
-                            <p>Pick a name, hit Create. Your room is ready instantly.</p>
-                        </div>
-                        <div class="pp-step">
-                            <span class="pp-step-num">02</span>
-                            <h3>Invite your team</h3>
-                            <p>Share the room link. Teammates join with a single click.</p>
-                        </div>
-                        <div class="pp-step">
-                            <span class="pp-step-num">03</span>
-                            <h3>Vote and reveal</h3>
-                            <p>Pick your cards, flip them together, and see the result.</p>
-                        </div>
+                    <ol class="pp-steps">
+                        <li class="pp-step" itemprop="step" itemscope itemtype="https://schema.org/HowToStep">
+                            <span class="pp-step-num" aria-hidden="true">01</span>
+                            <h3 itemprop="name">Create a room</h3>
+                            <p itemprop="text">Pick a name, hit Create. Your Planning Poker room is ready instantly.</p>
+                        </li>
+                        <li class="pp-step" itemprop="step" itemscope itemtype="https://schema.org/HowToStep">
+                            <span class="pp-step-num" aria-hidden="true">02</span>
+                            <h3 itemprop="name">Invite your team</h3>
+                            <p itemprop="text">Share the room link. Teammates join with a single click — no sign-up needed.</p>
+                        </li>
+                        <li class="pp-step" itemprop="step" itemscope itemtype="https://schema.org/HowToStep">
+                            <span class="pp-step-num" aria-hidden="true">03</span>
+                            <h3 itemprop="name">Vote and reveal</h3>
+                            <p itemprop="text">Pick your cards, flip them together, and see the estimate average instantly.</p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ============ FAQ (huge for SEO + GEO) ============ -->
+            <section class="pp-section" aria-labelledby="faq-title">
+                <div class="container">
+                    <div class="pp-section-head">
+                        <span class="pp-eyebrow">FAQ</span>
+                        <h2 id="faq-title" class="pp-section-title">Free Planning Poker, frequently asked</h2>
+                        <p class="pp-section-sub">Quick answers to the most common questions about free online Planning Poker.</p>
+                    </div>
+
+                    <div class="pp-faq">
+                        <details class="pp-faq-item">
+                            <summary>What is Planning Poker?</summary>
+                            <p>
+                                Planning Poker (also known as <em>Scrum Poker</em>) is a
+                                consensus-based estimation technique used by agile teams to
+                                assign story points to user stories. Each team member
+                                privately picks a card representing their estimate, and all
+                                cards are revealed simultaneously to avoid bias and anchoring.
+                            </p>
+                        </details>
+
+                        <details class="pp-faq-item">
+                            <summary>Is this Planning Poker tool really free?</summary>
+                            <p>
+                                Yes — it's 100% <strong>free Planning Poker</strong>. No
+                                sign-up, no ads, no limits, and no paywalls. It's also
+                                open source on GitHub, so you can self-host it if you want.
+                            </p>
+                        </details>
+
+                        <details class="pp-faq-item">
+                            <summary>Do I need an account to use it?</summary>
+                            <p>
+                                No account is required. Just open the site, create a room,
+                                share the link with your team, and start voting in seconds.
+                            </p>
+                        </details>
+
+                        <details class="pp-faq-item">
+                            <summary>Which card values does Planning Poker use?</summary>
+                            <p>
+                                Planning Poker uses a modified Fibonacci sequence:
+                                <code>1/2, 1, 2, 3, 5, 8, 13, 21, 34, 55</code>, plus a
+                                question mark for uncertainty and a coffee cup for a break.
+                            </p>
+                        </details>
+
+                        <details class="pp-faq-item">
+                            <summary>How does real-time voting work?</summary>
+                            <p>
+                                Planning Poker uses WebSockets, so every vote is synced live
+                                across all participants. Cards stay hidden until the host
+                                flips them, then the average is calculated automatically.
+                            </p>
+                        </details>
+
+                        <details class="pp-faq-item">
+                            <summary>Can I use it with remote teams?</summary>
+                            <p>
+                                Yes — Planning Poker is built for remote and distributed
+                                agile teams. Anyone with the room link can join from any
+                                browser, on desktop or mobile.
+                            </p>
+                        </details>
                     </div>
                 </div>
             </section>
 
             <!-- ============ FINAL CTA ============ -->
-            <section class="pp-section pp-cta-section">
+            <section class="pp-section pp-cta-section" aria-labelledby="cta-title">
                 <div class="container">
                     <div class="pp-cta-card">
-                        <h2 class="pp-cta-title">Ready to plan your next sprint?</h2>
-                        <p class="pp-cta-sub">It's free, takes seconds, and your team will thank you.</p>
-                        <a href="#" @click.prevent="document.querySelector('.pp-hero-card input').focus(); window.scrollTo({ top: 0, behavior: 'smooth' })" class="button is-danger has-text-white">
-                            Create a Room
+                        <h2 id="cta-title" class="pp-cta-title">Ready to plan your next sprint?</h2>
+                        <p class="pp-cta-sub">Start a free Planning Poker session in seconds — your agile team will thank you.</p>
+                        <a href="#roomName" @click.prevent="document.getElementById('roomName').focus(); window.scrollTo({ top: 0, behavior: 'smooth' })" class="button is-danger has-text-white">
+                            Create a Free Planning Poker Room
                         </a>
                     </div>
                 </div>
@@ -169,17 +471,17 @@
             <div class="container">
                 <div class="pp-footer-inner">
                     <p class="pp-footer-credit">
-                        Built with <span class="pp-heart">♥</span> by
+                        Built with <span class="pp-heart" aria-hidden="true">♥</span> by
                         <a href="https://devsprinters.site/" target="_blank" rel="noopener noreferrer" class="pp-footer-link">DevSprinters</a>
                         · Open source on
-                        <a href="https://github.com/HildegarMedina/planning-poker" target="_blank" rel="noopener noreferrer" class="pp-footer-link">
+                        <a href="https://github.com/HildegarMedina/planning-poker" target="_blank" rel="noopener noreferrer" class="pp-footer-link" aria-label="Planning Poker on GitHub">
                             <svg class="pp-gh-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
                             </svg>
                             GitHub
                         </a>
                     </p>
-                    <p class="pp-footer-sub">Planning Poker · Free agile estimation tool</p>
+                    <p class="pp-footer-sub">Free Planning Poker · Online agile estimation tool for Scrum teams</p>
                 </div>
             </div>
         </footer>

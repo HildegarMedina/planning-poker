@@ -730,6 +730,112 @@ small.has-text-danger { color: #fda4af !important; font-size: .82rem; }
 }
 
 /* ============================================================
+   SEO / Accessibility helpers
+   ============================================================ */
+.pp-skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 100;
+}
+.pp-skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    padding: .65rem 1rem;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+
+/* ----- Tight / prose section (What is Planning Poker) ----- */
+.pp-section-tight { padding: 2rem 0 1rem; }
+.pp-prose {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: left;
+}
+.pp-prose .pp-section-title { margin-top: .5rem; text-align: left; }
+.pp-prose p {
+    color: var(--text);
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+.pp-prose strong { color: var(--text-strong); }
+.pp-prose em { color: var(--primary-2); font-style: normal; }
+
+/* ----- FAQ accordion ----- */
+.pp-faq {
+    max-width: 48rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+.pp-faq-item {
+    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 0;
+    overflow: hidden;
+    transition: border-color .2s var(--ease);
+}
+.pp-faq-item[open] { border-color: var(--border-2); }
+.pp-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.1rem 1.35rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--text-strong);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    user-select: none;
+    transition: color .2s var(--ease);
+}
+.pp-faq-item summary::-webkit-details-marker { display: none; }
+.pp-faq-item summary::after {
+    content: '+';
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    color: var(--primary-2);
+    font-weight: 400;
+    transition: transform .25s var(--ease);
+    line-height: 1;
+}
+.pp-faq-item[open] summary::after { transform: rotate(45deg); }
+.pp-faq-item summary:hover { color: var(--primary-2); }
+.pp-faq-item p {
+    padding: 0 1.35rem 1.25rem;
+    margin: 0;
+    color: var(--text-soft);
+    font-size: .96rem;
+    line-height: 1.65;
+}
+.pp-faq-item code {
+    background: rgba(99,102,241,.12);
+    color: var(--primary-2);
+    padding: .1rem .4rem;
+    border-radius: 5px;
+    font-size: .88em;
+}
+
+/* Mobile-friendly button width inside hero card */
+@media (max-width: 600px) {
+    .pp-btn-block-mobile { width: 100%; }
+}
+
+/* ============================================================
    ALPINE x-cloak (evita FOUC antes de hidratar)
    ============================================================ */
 [x-cloak] { display: none !important; }
