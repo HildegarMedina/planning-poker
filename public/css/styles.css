@@ -619,7 +619,11 @@ small.has-text-danger { color: #fda4af !important; font-size: .82rem; }
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     counter-reset: steps;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
+.pp-steps > li { list-style: none; }
 @media (max-width: 800px) { .pp-steps { grid-template-columns: 1fr; } }
 
 .pp-step {
